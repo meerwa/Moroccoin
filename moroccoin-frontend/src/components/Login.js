@@ -15,42 +15,17 @@ export default function Login({ onLogin }) {
     setLoading(true);
     setError('');
     
-    try {
-      console.log('Tentative de connexion vers:', 'http://localhost:3001/api/login');
-      
-      const response = await fetch('http://localhost:3001/api/login', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ 
-          username: user.trim(), 
-          password: pass.trim() 
-        })
-      });
-      
-      console.log('Réponse reçue:', response.status, response.statusText);
-      
-      if (!response.ok) {
-        throw new Error(`Erreur serveur: ${response.status} ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      console.log('Données reçues:', data);
-      
-      if (data.success) {
-        onLogin();
-      } else {
-        setError(data.message || 'Identifiants incorrects');
-      }
-      
-    } catch (err) {
-      console.error('Erreur complète:', err);
-      setError(`Erreur de connexion: ${err.message}`);
-    } finally {
-      setLoading(false);
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Mock authentication - no backend needed
+    if (user.trim() === 'admin' && pass.trim() === 'admin123') {
+      onLogin();
+    } else {
+      setError('Identifiants incorrects');
     }
+    
+    setLoading(false);
   };
 
   const handleKeyPress = (e) => {
